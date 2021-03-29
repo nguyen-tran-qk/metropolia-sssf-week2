@@ -2,8 +2,7 @@
 
 require('dotenv').config();
 const express = require('express');
-const catRouter = require('./routes/catRoute');
-const userRouter = require('./routes/userRoute');
+const stationRouter = require('./stationRoutes');
 const db = require('./db');
 
 const app = express();
@@ -14,5 +13,4 @@ db.on('connected', () => {
   app.listen(port, () => console.log(`Express server listening on port ${port}!`))
 });
 
-app.use('/cat', catRouter);
-app.use('/user', userRouter);
+app.use('/station', stationRouter);
