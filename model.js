@@ -4,7 +4,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const connectionSchema = new Schema({
-    // _id: Schema.Types.ObjectId,
     ConnectionTypeID: { type: Schema.Types.ObjectId, ref: 'ConnectionType' },
     LevelID: { type: Schema.Types.ObjectId, ref: 'Level' },
     CurrentTypeID: { type: Schema.Types.ObjectId, ref: 'CurrentType' },
@@ -12,26 +11,22 @@ const connectionSchema = new Schema({
 });
 
 const connectionTypeSchema = new Schema({
-    // _id: Schema.Types.ObjectId,
     FormalName: String,
     Title: String,
 });
 
 const currentTypeSchema = new Schema({
-    // _id: Schema.Types.ObjectId,
     Description: String,
     Title: String,
 });
 
 const levelSchema = new Schema({
-    // _id: Schema.Types.ObjectId,
     Comments: String,
     Title: String,
     IsFastChargeCapable: Boolean,
 });
 
 const stationSchema = new Schema({
-    // _id: Schema.Types.ObjectId,
     Title: String,
     AddressLine1: String,
     Town: String,

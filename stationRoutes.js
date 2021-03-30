@@ -9,7 +9,23 @@ router.route('/')
     .get(async (req, res) => {
         if (req.query.topRight && req.query.bottomLeft) {
             const polygon = rectangleBounds(JSON.parse(req.query.topRight), JSON.parse(req.query.bottomLeft));
-            res.send(await stationModel.find().where('Location').within(polygon).limit(parseInt(req.query.limit) || 10));
+            res.send(await stationModel.find()
+                .where('Location').within(polygon)
+                .populate({
+                    path: 'Connections',
+                    populate: [
+                        {
+                            path: 'ConnectionTypeID'
+                        },
+                        {
+                            path: 'LevelID'
+                        },
+                        {
+                            path: 'CurrentTypeID'
+                        } ]
+                })
+                .limit(parseInt(req.query.limit) || 10)
+            );
         } else {
             res.send(await stationModel.find()
                 .populate({
@@ -55,6 +71,21 @@ router.route('/:id')
                     path: 'CurrentTypeID'
                 } ]
         }));
+    })
+    .put(async (req, res) => {
+        for (const connection of req.body.Connections) {
+            const { _id, ...other } = connection;
+            await connectionModel.findByIdAndUpdate(_id, other);
+        }
+        await stationModel.findByIdAndUpdate(req.params.id, {
+            ...req.body.Station,
+            Location: { type: 'Point', coordinates: req.body.Station.Location.coordinates }
+        });
+        res.send(`Updated station successfully.`);
+    })
+    .delete(async (req, res) => {
+        await stationModel.findByIdAndDelete(req.params.id);
+        res.send(`Deleted station successfully.`);
     });
 
 module.exports = router;
