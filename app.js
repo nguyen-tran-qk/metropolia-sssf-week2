@@ -7,7 +7,24 @@ import schemas from './schemas/index.js';
 import resolvers from './resolvers/index.js';
 import connectMongo from './db.js';
 
+<<<<<<< HEAD
 dotenv.config();
+=======
+const app = express();
+app.use(helmet());
+app.use(express.json());
+
+// enforce https
+app.enable('trust proxy');
+app.use((request, response, next) => {
+  if (process.env.NODE_ENV != 'development' && !request.secure) {
+    return response.redirect("https://" + request.headers.host + request.url);
+  }
+  next();
+});
+
+const port = 3000;
+>>>>>>> ad9f365 (add passport)
 
 (async () => {
     try {
