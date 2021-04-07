@@ -33,7 +33,7 @@ export default {
     Mutation: {
         addStation: async (parents, args) => {
             try {
-                const { Connections, ...data } = args;
+                const { Connections, Location, ...data } = args;
                 const addConnections = await Promise.all(
                     Connections.map(async (conn) => {
                         try {
@@ -50,10 +50,14 @@ export default {
 
                 const newStation = new stationModel({
                     ...data,
+                    Location: {
+                        type: 'Point',
+                        ...Location
+                    },
                     Connections: addConnections,
                 });
                 newStation.save();
-                return data;
+                return newStation.toObject();
             } catch (error) {
                 throw new UserInputError(
                     `Failed to create station: ${error.message}`

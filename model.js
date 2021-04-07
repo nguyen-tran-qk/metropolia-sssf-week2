@@ -7,7 +7,7 @@ const connectionSchema = new Schema({
     ConnectionTypeID: { type: Schema.Types.ObjectId, ref: 'ConnectionType' },
     LevelID: { type: Schema.Types.ObjectId, ref: 'Level' },
     CurrentTypeID: { type: Schema.Types.ObjectId, ref: 'CurrentType' },
-    quantity: Number,
+    Quantity: Number,
 });
 
 const connectionTypeSchema = new Schema({

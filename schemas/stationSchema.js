@@ -31,7 +31,7 @@ export default gql`
     ConnectionTypeID: String
     CurrentTypeID: String
     LevelID: String
-    quantity: Int
+    Quantity: Int
   }
 
   input NewLocation {
