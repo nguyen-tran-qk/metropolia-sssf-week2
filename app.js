@@ -1,21 +1,36 @@
 'use strict';
 
-require('dotenv').config();
-const express = require('express');
-const { graphqlHTTP } = require('express-graphql');
-const schema = require('./schema/schema');
-const stationRouter = require('./stationRoutes');
-const db = require('./db');
+import { ApolloError, ApolloServer } from 'apollo-server-express';
+import express from 'express';
+import dotenv from 'dotenv';
+import schemas from './schemas/index.js';
+import resolvers from './resolvers/index.js';
+import connectMongo from './db.js';
 
-const app = express();
-app.use(express.json());
-const port = 3000;
+dotenv.config();
 
-app.use('/graphql', graphqlHTTP({ schema, graphiql: true }));
+(async () => {
+    try {
+        const conn = await connectMongo();
+        if (conn) {
+            console.log("Connected successfully.");
+        }
 
+        const server = new ApolloServer({
+            typeDefs: schemas,
+            resolvers,
+        });
 
-db.on('connected', () => {
-  app.listen(port, () => console.log(`Express server listening on port ${port}!`))
-});
+        const app = express();
 
-app.use('/station', stationRouter);
+        server.applyMiddleware({ app });
+
+        app.listen({ port: 3000 }, () =>
+            console.log(
+                `🚀 Server ready at http://localhost:3000${server.graphqlPath}`
+            )
+        );
+    } catch (e) {
+        console.log("server error: " + e.message);
+    }
+})();

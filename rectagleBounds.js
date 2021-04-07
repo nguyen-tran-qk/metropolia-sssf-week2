@@ -15,4 +15,4 @@ const rectangleBounds = (topRight, bottomLeft) => (
     }
 );
 
-module.exports = rectangleBounds;
+export default rectangleBounds;

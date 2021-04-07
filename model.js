@@ -1,5 +1,5 @@
 'use strict';
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const Schema = mongoose.Schema;
 
@@ -46,10 +46,9 @@ const stationSchema = new Schema({
     Connections: [ { type: Schema.Types.ObjectId, ref: 'Connection' } ]
 });
 
-module.exports = {
-    connectionModel: mongoose.model('Connection', connectionSchema),
-    connectionTypeModel: mongoose.model('ConnectionType', connectionTypeSchema),
-    currentTypeModel: mongoose.model('CurrentType', currentTypeSchema),
-    levelModel: mongoose.model('Level', levelSchema),
-    stationModel: mongoose.model('Station', stationSchema),
-};
+
+export const connectionModel = mongoose.model('Connection', connectionSchema);
+export const connectionTypeModel = mongoose.model('ConnectionType', connectionTypeSchema);
+export const currentTypeModel = mongoose.model('CurrentType', currentTypeSchema);
+export const levelModel = mongoose.model('Level', levelSchema);
+export const stationModel = mongoose.model('Station', stationSchema);
