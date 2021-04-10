@@ -5,6 +5,7 @@ import connectionSchema from "./connectionSchema.js";
 import currentTypeSchema from "./currentTypeSchema.js";
 import connectionTypeSchema from "./connectionTypeSchema.js";
 import levelTypeSchema from "./levelTypeSchema.js";
+import userSchema from "./userSchema.js";
 
 export default [
   stationSchema,
@@ -12,4 +13,5 @@ export default [
   currentTypeSchema,
   connectionTypeSchema,
   levelTypeSchema,
+  userSchema
 ];

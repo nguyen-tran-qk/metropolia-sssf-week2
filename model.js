@@ -46,9 +46,21 @@ const stationSchema = new Schema({
     Connections: [ { type: Schema.Types.ObjectId, ref: 'Connection' } ]
 });
 
+const userSchema = new mongoose.Schema({
+    username: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+  });
 
 export const connectionModel = mongoose.model('Connection', connectionSchema);
 export const connectionTypeModel = mongoose.model('ConnectionType', connectionTypeSchema);
 export const currentTypeModel = mongoose.model('CurrentType', currentTypeSchema);
 export const levelModel = mongoose.model('Level', levelSchema);
 export const stationModel = mongoose.model('Station', stationSchema);
+export const userModel = mongoose.model('User', userSchema);
