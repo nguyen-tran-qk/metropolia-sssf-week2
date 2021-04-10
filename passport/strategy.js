@@ -17,7 +17,7 @@ passport.use(new Strategy(
             const user = await userModel.findOne({ username });
             console.log('Local strategy', user);
             if (user === null) {
-                return done(null, false, { message: 'Incorrect email.' });
+                return done(null, false, { message: 'Incorrect username.' });
             }
             console.log('pw', password, user.password);
             const validate = await bcrypt.compare(password, user.password);
@@ -36,7 +36,7 @@ passport.use(new Strategy(
 
 passport.use(new JWTStrategy({
     jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-    secretOrKey: 'asd123',
+    secretOrKey: 'mysecret',
 },
     async (jwtPayload, done) => {
         console.log('payload', jwtPayload);

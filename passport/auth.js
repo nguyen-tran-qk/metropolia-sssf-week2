@@ -4,11 +4,9 @@ import passport from './strategy.js';
 
 const login = (req, res) => {
   return new Promise((resolve, reject) => {
-    console.log('rq', req.body);
     passport.authenticate('local', {session: false},
         async (err, user, info) => {
           try {
-            console.log('controller info', info);
             if (err || !user) {
               reject(info.message);
             }
@@ -17,7 +15,7 @@ const login = (req, res) => {
                 reject(err);
               }
               // generate a signed son web token with the contents of user object and return it in the response
-              const token = jwt.sign(user, 'asd123');
+              const token = jwt.sign(user, 'mysecret');
               resolve({user, token});
             });
           } catch (e) {

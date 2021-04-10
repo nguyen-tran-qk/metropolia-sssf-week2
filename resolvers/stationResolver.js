@@ -1,7 +1,7 @@
 'use strict';
 
 import { connectionModel, stationModel } from "../model.js";
-import { UserInputError } from "apollo-server-errors";
+import { AuthenticationError, UserInputError } from "apollo-server-errors";
 import rectangelBounds from "../rectagleBounds.js";
 
 export default {
@@ -31,8 +31,11 @@ export default {
         },
     },
     Mutation: {
-        addStation: async (parents, args) => {
+        addStation: async (parents, args, context) => {
             try {
+                const { user } = context;
+                if (!user) throw new AuthenticationError("Not authenticated!");
+
                 const { Connections, Location, ...data } = args;
                 const addConnections = await Promise.all(
                     Connections.map(async (conn) => {
@@ -64,8 +67,11 @@ export default {
                 );
             }
         },
-        modifyStation: async (parents, args) => {
+        modifyStation: async (parents, args, context) => {
             try {
+                const { user } = context;
+                if (!user) throw new AuthenticationError("Not authenticated!");
+                
                 const { id, Connections, ...data } = args;
                 const stationUpdateData = await stationModel.findByIdAndUpdate(
                     id,
@@ -103,8 +109,11 @@ export default {
                 );
             }
         },
-        deleteStation: async (_, args) => {
+        deleteStation: async (_, args, context) => {
             try {
+                const { user } = context;
+                if (!user) throw new AuthenticationError("Not authenticated!");
+                
                 const { id } = args;
                 await stationModel.findByIdAndDelete(id);
                 return id;

@@ -5,6 +5,7 @@ import connectionResolver from "./connectionResolver.js";
 import connectionTypeResolver from "./connectionTypeResolver.js";
 import currentTypeResolver from "./currentTypeResolver.js";
 import levelResolver from "./levelResolver.js";
+import userResolver from "./userResolver.js";
 
 export default [
   staionResolver,
@@ -12,4 +13,5 @@ export default [
   connectionTypeResolver,
   currentTypeResolver,
   levelResolver,
+  userResolver,
 ];

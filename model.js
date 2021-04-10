@@ -56,6 +56,7 @@ const userSchema = new mongoose.Schema({
       type: String,
       required: true,
     },
+    full_name: String,
   });
 
 export const connectionModel = mongoose.model('Connection', connectionSchema);

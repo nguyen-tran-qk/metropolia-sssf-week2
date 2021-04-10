@@ -19,7 +19,7 @@ export default {
                     token: authResponse.token,
                 };
             } catch (error) {
-                throw new AuthenticationError(error.message);
+                throw new AuthenticationError(error.message || error);
             }
         },
     },
@@ -29,7 +29,7 @@ export default {
                 const { username, password } = args;
 
                 const hashedPassword = await bcrypt.hash(password, 12);
-                const newUser = new userModel({ username, password: hashedPassword });
+                const newUser = new userModel({ username, password: hashedPassword, full_name: '' });
 
                 return newUser.save();
             } catch (error) {

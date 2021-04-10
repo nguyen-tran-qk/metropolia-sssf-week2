@@ -37,9 +37,11 @@ dotenv.config();
 
         const app = express();
         app.use(helmet({
+            contentSecurityPolicy: false,
             ieNoOpen: false
         }));
         app.use(express.json());
+        app.use(express.urlencoded({ extended: true }));
 
         app.post('/cors-enabled', cors(), (req, res) => res.send('hello'));
 
